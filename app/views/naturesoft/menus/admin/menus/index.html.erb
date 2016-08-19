@@ -1,0 +1,132 @@
+<% title t(:menus) %>
+
+<div class="page_actions">
+    <%= link_to "#{t(:new_menu)} <i class=\"icon-plus22 position-right\"></i>".html_safe, naturesoft_menus.new_admin_menu_path, class: 'btn btn-primary' %>
+</div>
+<br />
+
+<form class="listing-form">
+    
+    <div class="panel panel-flat">
+        <div class="panel-body filter-box">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label><%= t(:parent) %></label>
+                        <%= select_tag(:parent_id, [], class: "select2-ajax", "data-url": select2_admin_menus_path) %>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label><%= t(:sort_by) %></label>
+                        <%= select_tag(:sort_by, options_for_select(Naturesoft::Menus::Menu.sort_by, :selected => params[:sort_by]), class: "select2") %>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label><%= t(:sort_order) %></label>
+                        <%= select_tag(:sort_orders, options_for_select(Naturesoft::Menus::Menu.sort_orders, :selected => params[:sort_orders]), class: "select2") %>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group has-feedback">
+                        <label><%= t(:search) %></label>
+                        <input type="text" name="keyword" class="form-control" placeholder="Enter search(name, description)..." value="<%= params[:keyword] %>">
+                        <div class="form-control-feedback">
+                            <i class="icon-search4 text-size-base"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+            
+    <div class="btn-group list_actions mb-10 hide">
+        <button type="button" class="btn btn-xs btn-info dropdown-toggle" data-toggle="dropdown">
+            Actions <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">											
+            <li>
+                <a href="" data-href="<%= naturesoft_menus.delete_admin_menus_path %>" data-confirm="Are you sure!" data-method="DELETE">
+                    <i class="icon-enter"></i> Delete
+                </a>
+            </li>            
+        </ul>
+    </div>
+                
+    <!-- Basic datatable -->
+    <div class="panel panel-flat">
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr class="bg-teal-800">
+                        <th width="1%" class="check_all_list">
+                            <input type="checkbox" class="styled">
+                        </th>
+                        <th><%= t(:title) %></th>
+                        <th><%= t(:description) %></th>                        
+                        <td class="text-center">
+                            <%= t(:creator) %>
+                        </td>
+                        <th><%= t(:created_at) %></th>
+                        <th><%= t(:status) %></th>
+                        <th class="text-right"><%= t(:actions) %></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @menus.each do |item| %>
+                        <tr>
+                            <td width="1%">
+                                <input type="checkbox" class="node styled"
+                                    name="ids[]"
+                                    value="<%= item.id %>"
+                                />
+                            </td>
+                            <td class="kq_search">
+                                <%= link_to item.full_name, naturesoft_menus.edit_admin_menu_path(item), class: "text-semibold" %>                              
+                            </td>
+                            <td class="kq_search"><%= truncate(strip_tags(item.description), length: 150) %></td>                                                        
+                            <td class="text-center">
+                                <%= user_box(item.user) %>
+                            </td>
+                            <td><%= display_date(item.created_at) %></td>
+                            <td><%= display_status(item.status) %></td>
+                            <td class="text-right">
+                                <div class="btn-group">
+                                    <ul class="icons-list">
+                                        <%= link_to '<i class="icon-pencil"></i>'.html_safe, naturesoft_menus.edit_admin_menu_path(item), class: "btn bg-teal btn-icon btn-xs", title: item.name %>
+                                        <button type="button" class="btn bg-teal dropdown-toggle btn-xs" data-toggle="dropdown"><span class="caret"></span></button>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <% if item.status == "active" %>
+                                            <li>
+                                                <%= link_to '<i class="icon-lock4"></i> '.html_safe + t(:inactive), naturesoft_menus.disable_admin_menus_path(id: item.id), method: :put %>
+                                            </li>
+                                            <% end %>
+                                            <% if item.status == "inactive" %>
+                                            <li>
+                                                <%= link_to '<i class="icon-unlocked"></i> '.html_safe + t(:active), naturesoft_menus.enable_admin_menus_path(id: item.id), method: :put %>
+                                            </li>
+                                            <% end %>
+                                            <li>
+                                                <%= link_to '<i class="icon-cross2"></i> '.html_safe + t(:delete), naturesoft_menus.admin_menu_path(item), method: :delete, data: {confirm: 'Are you sure?'} %>
+                                            </li>
+                                        </ul>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+            <div class="dataTables_wrapper no-footer">
+                <div class="datatable-footer showed">
+                    <div class="dataTables_info" ><%= page_entries_info @menus %></div>
+                    <div class="dataTables_paginate paging_simple_numbers">
+                        <%= will_paginate @menus, previous_label: '←', next_label: '→', renderer: BootstrapPagination::Rails %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- /basic datatable -->
