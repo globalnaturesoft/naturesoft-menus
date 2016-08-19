@@ -1,0 +1,2 @@
+<% engine_path = @menu.engine_name == "core" ? "" : "/"+@menu.engine_name %>
+<%= render "naturesoft"+engine_path+"/admin/menus/"+@menu.module_name+"/form", params: @params %>

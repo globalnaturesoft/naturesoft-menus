@@ -32,18 +32,35 @@
     <div class="form-group">
       <label class="col-md-2 control-label" ><%= t(:parent_menu) %></label>
         <div class="col-md-10">
+            <% selected = options_for_select([[menu.parent.full_name,menu.parent.id]],1) if menu.parent.present? %>
             <%= select_tag("menu[parent_id]",
-              nil,
+              selected,
               {
                 class: "select2-ajax",
                 "data-url": select2_admin_menus_path,
                 "data-excluded": menu.id,
-                "value": menu.parent.present? ? menu.parent.id : "",
-                "text": menu.parent.present? ? menu.parent.name : ""
               }
-          ) %>
+            ) %>            
         </div>
     </div>
+    
+    <div class="form-group">
+      <label class="col-md-2 control-label" ><%= t(:menu_type) %></label>
+        <div class="col-md-10">
+            <%= f.select :menu, grouped_options_for_select(Naturesoft::Menus::Menu.menusSelectOptions, menu.menu), {include_blank: "Choose..."}, {class: "select2 menu-type-select required", "data-url": naturesoft_menus.params_form_admin_menus_path(id: menu.id)} %>    
+        </div>
+    </div>
+    
+    <div class="form-group">
+      <label class="col-md-2 control-label" ><%= t(:path) %></label>
+        <div class="col-md-10">
+            <h6 class="mb-0"><%= menu.path_string %></h6 >
+        </div>
+    </div>
+        
+    <h3>Params</h3>
+    
+    <div class="menu_params_container"></div>
 
     <div class="text-right">
         <%= button_tag "#{t(:save)} <i class=\"icon-plus22 position-right\"></i>".html_safe, class: "btn btn-primary"%>

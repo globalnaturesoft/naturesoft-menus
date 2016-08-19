@@ -34,6 +34,7 @@ module Naturesoft
         # POST /menus
         def create
           @menu = Menu.new(menu_params)
+          @menu.params = params[:params].to_json
           @menu.user = current_user
           
           if @menu.save
@@ -45,6 +46,7 @@ module Naturesoft
     
         # PATCH/PUT /menus/1
         def update
+          @menu.params = params[:params].to_json
           if @menu.update(menu_params)
             redirect_to naturesoft_menus.edit_admin_menu_path(@menu.id), notice: 'Menu was successfully updated.'
           else
@@ -80,6 +82,15 @@ module Naturesoft
         def select2
           render json: Menu.select2(params)
         end
+        
+        # GET /menus/menu_params
+        def params_form
+          @menu = params[:id].present? ? Naturesoft::Menus::Menu.find(params[:id]) : Naturesoft::Menus::Menu.new
+          @menu.menu = params[:type]
+          @params = @menu.get_params
+          
+          render layout: nil
+        end
     
         private
           # Use callbacks to share common setup or constraints between actions.
@@ -89,7 +100,7 @@ module Naturesoft
     
           # Only allow a trusted parameter "white list" through.
           def menu_params
-            params.fetch(:menu, {}).permit(:name, :description, :status, :parent_id)
+            params.fetch(:menu, {}).permit(:name, :description, :status, :parent_id, :menu)
           end
       end
     end

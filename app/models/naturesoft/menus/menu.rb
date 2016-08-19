@@ -89,5 +89,83 @@ module Naturesoft::Menus
 			result = {"items" => options}
 		end
     
+    # get menu types from engines
+    def self.menus
+      types = {}
+      Dir.glob(Rails.root.join('engines').to_s + "/*") do |d|
+        eg = d.split(/[\/\\]/).last
+        
+        if eval("@#{eg}").present?
+          types[eg] = eval("@#{eg}")
+        end
+      end
+      types
+    end
+    
+    # menu types select options
+    def self.menusSelectOptions
+      options = []
+      self.menus.each do |m|
+        opts = []
+        m[1].each do |mm|
+          opts << [mm[1]["label"], m[0]+"::"+mm[0]]
+        end
+        options << [m[0], opts]
+      end
+      options
+    end
+    
+    # get params by menu
+    def get_params
+      engine = self.engine_name
+      mod = self.module_name
+        
+      # Get default params
+      result = Menu.get_default(engine, mod)
+      
+      if params.present?
+        result = JSON.parse(params)
+      end
+      
+      return result
+    end
+    
+    # get default values from model
+    def self.get_default(engine, mod)
+      eval("@#{engine}")[mod]["params"]
+    end
+    
+    # get engine name
+    def engine_name
+      self.menu.to_s.split("::")[0]
+    end
+    
+    # get module name
+    def module_name
+      self.menu.to_s.split("::")[1]
+    end
+    
+    # path
+    def path_string
+			return "" if !menu.present?
+			
+			str = Menu.config(self)["path"]
+			if self.get_params.present?
+				ps = []
+				self.get_params.each do |row|
+					ps << "#{row[0].to_s}=#{row[1].to_s}"
+				end
+				str += "(#{ps.join(",")})"
+			end
+			str
+		end
+    def path
+			eval(path_string)
+		end
+    
+    # get config
+    def self.config(menu)
+			eval("@#{menu.engine_name}")[menu.module_name]
+		end
   end
 end

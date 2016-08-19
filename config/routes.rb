@@ -6,6 +6,7 @@ Naturesoft::Menus::Engine.routes.draw do
         put "disable"
         delete 'delete'
         get "select2"
+        get "params_form"
       end
     end
   end
