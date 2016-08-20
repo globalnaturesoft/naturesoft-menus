@@ -145,22 +145,33 @@ module Naturesoft::Menus
       self.menu.to_s.split("::")[1]
     end
     
-    # path
-    def path_string
-			return "" if !menu.present?
-			
-			str = Menu.config(self)["path"]
-			if self.get_params.present?
-				ps = []
-				self.get_params.each do |row|
-					ps << "#{row[0].to_s}=#{row[1].to_s}"
-				end
-				str += "(#{ps.join(",")})"
-			end
-			str
+    # all options
+    def options
+			Menu.config(self)
 		end
-    def path
-			eval(path_string)
+    
+    # path
+    def path(more_params=nil)
+			return "...not generated!" if id.nil?
+			
+			params = {controller: options["controller"], action: options["action"], :only_path => true}
+			if !get_params.nil?
+				get_params.each do |row|
+					params = params.merge({:"#{row[0]}" => (row[1].present? and row[1] != "nil" ? row[1] : "__MISSING__")})
+				end
+			end
+			
+			if !more_params.nil?
+				more_params.each do |row|
+					params = params.merge({:"#{row[0]}" => Naturesoft::ApplicationController.helpers.url_friendly(row[1])})
+				end
+			end
+			
+			begin
+				return eval("Naturesoft::#{engine_name.capitalize}::Engine").routes.url_for(params)
+			rescue => ex
+				return "<span class='text-danger'>...something not right!</span><br ><small>#{ex.message}</small>"
+			end
 		end
     
     # get config

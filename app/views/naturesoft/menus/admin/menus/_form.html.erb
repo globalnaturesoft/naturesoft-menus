@@ -50,13 +50,6 @@
             <%= f.select :menu, grouped_options_for_select(Naturesoft::Menus::Menu.menusSelectOptions, menu.menu), {include_blank: "Choose..."}, {class: "select2 menu-type-select required", "data-url": naturesoft_menus.params_form_admin_menus_path(id: menu.id)} %>    
         </div>
     </div>
-    
-    <div class="form-group">
-      <label class="col-md-2 control-label" ><%= t(:path) %></label>
-        <div class="col-md-10">
-            <h6 class="mb-0"><%= menu.path_string %></h6 >
-        </div>
-    </div>
         
     <h3>Params</h3>
     

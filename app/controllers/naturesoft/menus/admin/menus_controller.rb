@@ -87,7 +87,7 @@ module Naturesoft
         def params_form
           @menu = params[:id].present? ? Naturesoft::Menus::Menu.find(params[:id]) : Naturesoft::Menus::Menu.new
           @menu.menu = params[:type]
-          @params = @menu.get_params
+          @params = @menu.get_params.nil? ? {} : @menu.get_params
           
           render layout: nil
         end
