@@ -188,7 +188,15 @@ module Naturesoft::Menus
     # get route name
     def url
 			return nil if name.nil?
-			"/"+Naturesoft::ApplicationController.helpers.url_friendly(name)+".html"
+			
+			names = [Naturesoft::ApplicationController.helpers.url_friendly(self.name)]
+			p = self.parent
+			while !p.nil? do
+				names << Naturesoft::ApplicationController.helpers.url_friendly(p.name)
+				p = p.parent
+			end
+			
+			"/"+names.reverse.join("/")+".html"
 		end
   end
 end
