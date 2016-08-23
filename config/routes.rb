@@ -11,5 +11,5 @@ Naturesoft::Menus::Engine.routes.draw do
     end
   end
   
-  get "aaaa.htmlz" => "menus#index", as: :articles
+  get "menu/:id" => "menus#show", as: :menu
 end

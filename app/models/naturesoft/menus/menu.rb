@@ -168,7 +168,7 @@ module Naturesoft::Menus
 			end
 			
 			begin
-				return eval("Naturesoft::#{engine_name.capitalize}::Engine").routes.url_for(params)
+				return eval("Naturesoft::#{engine_name.split('_').map(&:capitalize).join('')}::Engine").routes.url_for(params)
 			rescue => ex
 				return "<span class='text-danger'>...something not right!</span><br ><small>#{ex.message}</small>"
 			end
