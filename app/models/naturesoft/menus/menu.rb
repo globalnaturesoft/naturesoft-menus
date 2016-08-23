@@ -130,6 +130,20 @@ module Naturesoft::Menus
       return result
     end
     
+    # def gnerate route
+    def route_params
+			return nil if id.nil?
+			
+			params = {controller: options["controller"], action: options["action"], :only_path => true}
+			if !get_params.nil?
+				get_params.each do |row|
+					params = params.merge({:"#{row[0]}" => (row[1].present? and row[1] != "nil" ? row[1] : "__MISSING__")})
+				end
+			end
+			
+			return params
+		end
+    
     # get default values from model
     def self.get_default(engine, mod)
       eval("@#{engine}")[mod]["params"]
@@ -151,32 +165,30 @@ module Naturesoft::Menus
 		end
     
     # path
-    def path(more_params=nil)
-			return "...not generated!" if id.nil?
-			
-			params = {controller: options["controller"], action: options["action"], :only_path => true}
-			if !get_params.nil?
-				get_params.each do |row|
-					params = params.merge({:"#{row[0]}" => (row[1].present? and row[1] != "nil" ? row[1] : "__MISSING__")})
-				end
-			end
-			
-			if !more_params.nil?
-				more_params.each do |row|
-					params = params.merge({:"#{row[0]}" => Naturesoft::ApplicationController.helpers.url_friendly(row[1])})
-				end
-			end
+    def path
+			return "" if route_params.nil?
 			
 			begin
-				return eval("Naturesoft::#{engine_name.split('_').map(&:capitalize).join('')}::Engine").routes.url_for(params)
+				return eval("Naturesoft::#{engine_name.split('_').map(&:capitalize).join('')}::Engine").routes.url_for(route_params)
 			rescue => ex
-				return "<span class='text-danger'>...something not right!</span><br ><small>#{ex.message}</small>"
+				return "<span class='text-danger'>Invalid route!</span><br ><small>#{ex.message}</small>"
 			end
 		end
     
     # get config
     def self.config(menu)
 			eval("@#{menu.engine_name}")[menu.module_name]
+		end
+    
+    # def get_all
+    def self.get_all
+			self.all
+		end
+    
+    # get route name
+    def url
+			return nil if name.nil?
+			"/"+Naturesoft::ApplicationController.helpers.url_friendly(name)+".html"
 		end
   end
 end

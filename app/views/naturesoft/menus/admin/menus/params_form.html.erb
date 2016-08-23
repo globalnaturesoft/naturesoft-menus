@@ -1,2 +1,16 @@
+<div class="form-group">
+  <label class="col-md-2 control-label" ><%= t(:path) %></label>
+    <div class="col-md-10">
+        <h6 class="mt-0 text-semibold">
+          <% if @menu.url.nil? %>
+            ...not generated
+          <% else %>
+            <a href="<%= @menu.url %>" target="_blank"><%= @menu.url %></a>
+          <% end %>
+        </h6>
+        <div class=" text-muted"><%= @menu.path.html_safe %></div>
+    </div>
+</div>
+
 <% engine_path = @menu.engine_name == "core" ? "" : "/"+@menu.engine_name %>
 <%= render "naturesoft"+engine_path+"/admin/menus/"+@menu.module_name+"/form", menu: @menu, params: @params %>
