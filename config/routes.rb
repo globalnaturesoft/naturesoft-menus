@@ -11,11 +11,11 @@ Naturesoft::Menus::Engine.routes.draw do
     end
   end
   
-  #begin
-  #  # route for menus
-  #  Naturesoft::Menus::Menu.get_all.each do |m|
-  #    get m.url, m.route_params
-  #  end
-  #rescue
-  #end
+  begin
+    # route for menus
+    Naturesoft::Menus::Menu.get_all.each do |m|
+      get m.url, m.route_params
+    end
+  rescue
+  end
 end

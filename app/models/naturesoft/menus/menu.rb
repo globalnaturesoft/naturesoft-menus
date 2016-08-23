@@ -7,6 +7,17 @@ module Naturesoft::Menus
     has_many :children, class_name: "Menu", foreign_key: "parent_id"
     
     after_save :update_level
+    after_save :update_cache_options
+    
+    def update_cache_options
+			self.update_column(:cache_options, options.to_json)
+		end
+    
+    def self.update_all_cache_options
+			self.all.each do |m|
+				m.update_cache_options
+			end
+		end
     
     def update_level
 			level = 1
@@ -16,6 +27,13 @@ module Naturesoft::Menus
 				p = p.parent
 			end
 			self.update_column(:level, level)
+		end
+    
+    # get saved cache options
+    def get_cache_options
+			return {} if cache_options.nil?
+			
+			JSON.parse(cache_options)
 		end
     
     def self.sort_by
@@ -121,7 +139,7 @@ module Naturesoft::Menus
       mod = self.module_name
         
       # Get default params
-      result = Menu.get_default(engine, mod)
+      result = get_cache_options["params"]
       
       if params.present?
         result = JSON.parse(params)
@@ -134,20 +152,15 @@ module Naturesoft::Menus
     def route_params
 			return nil if id.nil?
 			
-			params = {controller: options["controller"], action: options["action"], :only_path => true}
+			result = {controller: get_cache_options["controller"], action: get_cache_options["action"], :only_path => true}
 			if !get_params.nil?
 				get_params.each do |row|
-					params = params.merge({:"#{row[0]}" => (row[1].present? and row[1] != "nil" ? row[1] : "__MISSING__")})
+					result = result.merge({:"#{row[0]}" => (row[1].present? and row[1] != "nil" ? row[1] : "__MISSING__")})
 				end
 			end
 			
-			return params
+			return result
 		end
-    
-    # get default values from model
-    def self.get_default(engine, mod)
-      eval("@#{engine}")[mod]["params"]
-    end
     
     # get engine name
     def engine_name
@@ -161,7 +174,12 @@ module Naturesoft::Menus
     
     # all options
     def options
-			Menu.config(self)
+			Menu.get_options(self)
+		end
+    
+    # def get
+    def self.get_options(menu)
+			eval("@#{menu.engine_name}")[menu.module_name]
 		end
     
     # path
@@ -173,11 +191,6 @@ module Naturesoft::Menus
 			rescue => ex
 				return "<span class='text-danger'>Invalid route!</span><br ><small>#{ex.message}</small>"
 			end
-		end
-    
-    # get config
-    def self.config(menu)
-			eval("@#{menu.engine_name}")[menu.module_name]
 		end
     
     # def get_all

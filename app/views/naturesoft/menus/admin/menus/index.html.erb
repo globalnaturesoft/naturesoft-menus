@@ -64,7 +64,7 @@
                             <input type="checkbox" class="styled">
                         </th>
                         <th><%= t(:title) %></th>
-                        <th><%= t(:description) %></th>                        
+                        <!--<th><%= t(:description) %></th> -->                       
                         <td class="text-center">
                             <%= t(:creator) %>
                         </td>
@@ -83,9 +83,13 @@
                                 />
                             </td>
                             <td class="kq_search">
-                                <%= link_to item.full_name, naturesoft_menus.edit_admin_menu_path(item), class: "text-semibold" %>                              
+                                <%= link_to item.full_name, naturesoft_menus.edit_admin_menu_path(item), class: "text-semibold" %>
+                                <div class="text-muted">
+                                    <%= item.url %><br />
+                                    <%= item.path.html_safe %>
+                                </div>
                             </td>
-                            <td class="kq_search"><%= truncate(strip_tags(item.description), length: 150) %></td>                                                        
+                            <!--<td class="kq_search"><%= truncate(strip_tags(item.description), length: 150) %></td>                                                        -->
                             <td class="text-center">
                                 <%= user_box(item.user) %>
                             </td>

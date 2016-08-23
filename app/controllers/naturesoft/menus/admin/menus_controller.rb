@@ -13,6 +13,7 @@ module Naturesoft
     
         # GET /menus
         def index
+          Menu.update_all_cache_options
           @menus = Menu.search(params).paginate(:page => params[:page], :per_page => 10)
         end
     
