@@ -1,0 +1,6 @@
+<h3><%= parent_menu.name %></h3>
+<ul class="menu-widget">
+  <% parent_menu.children.each do |child_1| %>
+    <li><%= link_to child_1.name, "" %></li>
+  <% end %>
+</ul>

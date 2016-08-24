@@ -1,0 +1,9 @@
+<%
+  options = nsmodule.get_options
+  parent_menu = Naturesoft::Menus::Menu.where(id: options["parent_id"]).first
+%>
+
+<%= render "naturesoft/"+nsmodule.engine_name+"/admin/nsmodules/"+nsmodule.module_name+"/templates/default",
+  parent_menu: parent_menu,
+  options: options
+%>
