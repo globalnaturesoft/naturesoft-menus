@@ -85,7 +85,12 @@
                             <td width="40%" class="kq_search">
                                 <%= link_to item.full_name, naturesoft_menus.edit_admin_menu_path(item), class: "text-semibold" %>
                                 <div class="text-muted">
-                                    <%= item.url %><br />
+                                    <% if item.url.nil? %>
+                                        ...not generated
+                                    <% else %>
+                                      <a href="<%= item.url %>" target="_blank" class="no-tab"><%= item.url %></a>
+                                    <% end %>
+                                    <br />
                                     <%= item.path.html_safe %>
                                 </div>
                             </td>

@@ -5,7 +5,7 @@
           <% if @menu.url.nil? %>
             ...not generated
           <% else %>
-            <a href="<%= @menu.url %>" target="_blank"><%= @menu.url %></a>
+            <a href="<%= @menu.url %>" target="_blank" class="no-tab"><%= @menu.url %></a>
           <% end %>
         </h6>
         <div class=" text-muted"><%= @menu.path.html_safe %></div>
