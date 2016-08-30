@@ -1,6 +1,7 @@
 module Naturesoft::Menus
   class Menu < ApplicationRecord
     validates :name, presence: true
+    include Naturesoft::CustomOrder
 		
     belongs_to :user
     belongs_to :parent, class_name: "Menu", optional: true
@@ -38,6 +39,7 @@ module Naturesoft::Menus
     
     def self.sort_by
       [
+				["Custom order","naturesoft_menus_menus.custom_order"],
 			  ["Level","naturesoft_menus_menus.level"],
         ["Name","naturesoft_menus_menus.name"],
         ["Created At","naturesoft_menus_menus.created_at"]
