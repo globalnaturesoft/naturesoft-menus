@@ -67,9 +67,9 @@
                         </th>
                         <th><%= t(:title) %></th>
                         <!--<th><%= t(:description) %></th> -->                       
-                        <td class="text-center">
+                        <th class="text-center">
                             <%= t(:creator) %>
-                        </td>
+                        </th>
                         <th><%= t(:created_at) %></th>
                         <th><%= t(:status) %></th>
                         <th class="text-right"><%= t(:actions) %></th>
@@ -77,8 +77,8 @@
                 </thead>
                 <tbody>
                     <% @menus.each do |item| %>
-                        <tr class="text-nowrap">
-                            <td width="1%">
+                        <tr>
+                            <td width="1%" class="text-nowrap">
                                 <input type="checkbox" class="node styled"
                                     name="ids[]"
                                     value="<%= item.id %>"
