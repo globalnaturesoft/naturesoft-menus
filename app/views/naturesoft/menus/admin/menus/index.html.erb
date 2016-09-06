@@ -15,10 +15,20 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label><%= t(:parent) %></label>
-                        <%= select_tag(:parent_id, [], class: "select2-ajax", "data-url": select2_admin_menus_path) %>
+                        <%= select_tag(:parent_id,
+                            [],
+                            class: "select2-ajax",
+                            "data-url": select2_admin_menus_path(parent_id: 'all')
+                        ) %>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label><%= t(:deep) %></label>
+                        <%= select_tag(:deep, options_for_select([*"all", *1..10], "all"), class: "select2", "sort-cond": "1") %>
+                    </div>
+                </div>
+                <div class="col-md-2">
                     <div class="form-group">
                         <label><%= t(:sort_by) %></label>
                         <%= select_tag(:sort_by, options_for_select(Naturesoft::Menus::Menu.sort_by, :selected => params[:sort_by]), class: "select2", "sort-cond": "naturesoft_menus_menus.custom_order") %>
@@ -30,7 +40,7 @@
                         <%= select_tag(:sort_orders, options_for_select(Naturesoft::Menus::Menu.sort_orders, :selected => params[:sort_orders]), class: "select2", "sort-cond": "asc") %>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group has-feedback">
                         <label><%= t(:search) %></label>
                         <input type="text" name="keyword" class="form-control" placeholder="Enter search(name, description)..." value="<%= params[:keyword] %>">
@@ -76,61 +86,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% @menus.each do |item| %>
-                        <tr>
-                            <td width="1%" class="text-nowrap">
-                                <input type="checkbox" class="node styled"
-                                    name="ids[]"
-                                    value="<%= item.id %>"
-                                />
-                                <input type="hidden"
-                                    name="custom_order"
-                                    value="<%= item.custom_order %>"
-                                />
-                            </td>
-                            <td width="40%" class="kq_search">
-                                <%= link_to item.full_name, naturesoft_menus.edit_admin_menu_path(item), class: "text-semibold" %>
-                                <div class="text-muted">
-                                    <% if item.url.nil? %>
-                                        ...not generated
-                                    <% else %>
-                                      <a href="<%= item.url %>" target="_blank" class="no-tab"><%= item.url %></a>
-                                    <% end %>
-                                    <br />
-                                    <%= item.path.html_safe %>
-                                </div>
-                            </td>
-                            <!--<td class="kq_search"><%= truncate(strip_tags(item.description), length: 150) %></td>                                                        -->
-                            <td class="text-center">
-                                <%= user_box(item.user) %>
-                            </td>
-                            <td><%= display_date(item.created_at) %></td>
-                            <td><%= display_status(item.status) %></td>
-                            <td class="text-right">
-                                <div class="btn-group">
-                                    <ul class="icons-list">
-                                        <%= link_to '<i class="icon-pencil"></i>'.html_safe, naturesoft_menus.edit_admin_menu_path(item), class: "btn bg-teal btn-icon btn-xs", title: item.name %>
-                                        <button type="button" class="btn bg-teal dropdown-toggle btn-xs" data-toggle="dropdown"><span class="caret"></span></button>
-                                        <ul class="dropdown-menu dropdown-menu-right">
-                                            <% if item.status == "active" %>
-                                            <li>
-                                                <%= link_to '<i class="icon-lock4"></i> '.html_safe + t(:inactive), naturesoft_menus.disable_admin_menus_path(id: item.id), method: :put %>
-                                            </li>
-                                            <% end %>
-                                            <% if item.status == "inactive" %>
-                                            <li>
-                                                <%= link_to '<i class="icon-unlocked"></i> '.html_safe + t(:active), naturesoft_menus.enable_admin_menus_path(id: item.id), method: :put %>
-                                            </li>
-                                            <% end %>
-                                            <li>
-                                                <%= link_to '<i class="icon-cross2"></i> '.html_safe + t(:delete), naturesoft_menus.admin_menu_path(item), method: :delete, data: {confirm: 'Are you sure?'} %>
-                                            </li>
-                                        </ul>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                    <% end %>
+                    <%= recursive_rows(@menus, params[:deep].to_i, "naturesoft/menus/admin/menus/row", true) %>                    
                 </tbody>
             </table>
             <div class="dataTables_wrapper no-footer">
