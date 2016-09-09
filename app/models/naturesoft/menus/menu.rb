@@ -9,6 +9,12 @@ module Naturesoft::Menus
     
     after_save :update_level
     after_save :update_cache_options
+    after_save :reload_routes
+    
+    def reload_routes
+			# reload routes
+      Rails.application.reload_routes!  
+		end
     
     def update_cache_options
 			self.update_column(:cache_options, options.to_json)

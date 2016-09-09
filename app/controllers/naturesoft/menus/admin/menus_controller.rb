@@ -39,9 +39,6 @@ module Naturesoft
           @menu.user = current_user
           
           if @menu.save
-            # reload server
-            `touch tmp/restart.txt`
-            
             redirect_to naturesoft_menus.edit_admin_menu_path(@menu.id), notice: 'Menu was successfully created.'
           else
             render :new
@@ -52,9 +49,6 @@ module Naturesoft
         def update
           @menu.params = params[:params].to_json
           if @menu.update(menu_params)
-            # reload routes
-            Rails.application.reload_routes!            
-            
             redirect_to naturesoft_menus.edit_admin_menu_path(@menu.id), notice: 'Menu was successfully updated.'
           else
             render :edit
