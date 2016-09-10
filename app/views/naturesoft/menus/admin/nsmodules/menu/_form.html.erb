@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-5">
     <div class="form-group">
         <label class="control-label" ><%= t(:parent_menu) %> <span class='text-danger'>*</span></label>
         <div class="">
@@ -16,12 +16,20 @@
         </div>
     </div>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-4">
     <div class="form-group">
         <label class="control-label" ><%= t(:deep) %> <span class='text-danger'>*</span></label>
         <div class="">
             <%= text_field_tag "options[deep]", options["deep"], class: "form-control number_input required" %>
         </div>
     </div>
-  </div>  
+  </div>
+  <div class="col-md-3">
+    <div class="form-group">
+        <label class="control-label" ><%= t(:style) %> <span class='text-danger'>*</span></label>
+        <div class="">
+            <%= text_field_tag "options[style]", options["style"], class: "form-control required" %>
+        </div>
+    </div>
+  </div> 
 </div>
