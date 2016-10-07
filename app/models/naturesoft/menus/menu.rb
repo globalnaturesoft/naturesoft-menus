@@ -167,7 +167,7 @@ module Naturesoft::Menus
 					result = result.merge({:"#{row[0]}" => (row[1].present? and row[1] != "nil" ? row[1] : "__MISSING__")})
 				end
 			end
-			
+			result[:menu_id] = self.id
 			return result
 		end
     

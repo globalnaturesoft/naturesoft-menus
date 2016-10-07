@@ -1,7 +1,7 @@
 <%
   options = nsmodule.get_options
   parent_menu = Naturesoft::Menus::Menu.where(id: options["parent_id"]).first
-  menus = parent_menu.nil? ? Naturesoft::Menus::Menu.where(level: 1).order("custom_order, created_at") : parent_menu.children.order("custom_order, created_at")
+  menus = parent_menu.nil? ? Naturesoft::Menus::Menu.where(level: 1).where(status: "active").order("custom_order, created_at") : parent_menu.children.where(status: "active").order("custom_order, created_at")
 %>
 
 <%= render "naturesoft/"+nsmodule.engine_name+"/admin/nsmodules/"+nsmodule.module_name+"/templates/"+options["style"],
