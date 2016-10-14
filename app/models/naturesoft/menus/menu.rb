@@ -2,6 +2,7 @@ module Naturesoft::Menus
   class Menu < ApplicationRecord
     validates :name, presence: true
     include Naturesoft::CustomOrder
+    mount_uploader :image, Naturesoft::Menus::MenuUploader
 		
     belongs_to :user
     belongs_to :parent, class_name: "Menu", optional: true

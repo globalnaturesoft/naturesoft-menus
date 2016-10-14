@@ -13,7 +13,27 @@
   </div>
 <% end %>
 
-<%= form_for([naturesoft_menus, :admin, menu], html: {class: "form-horizontal validate"}) do |f| %>
+<%= form_for([naturesoft_menus, :admin, menu], html: {class: "form-horizontal validate", multipart: true}) do |f| %>
+    
+    <div class="form-group">
+      <label class="col-md-2 control-label" ><%= t(:image) %> </label>
+      <div class="media no-margin-top col-md-10">
+        <div class="media-left">
+          <a href="#">
+            <% if menu.image.present? %>
+              <img src="<%= menu.image %>" style="width: 60px; height: 60px; border-radius: 2px;" alt="">
+            <% else %>
+              <img src="/backend/assets/images/placeholder.jpg" style="width: 60px; height: 60px; border-radius: 2px;" alt="">
+            <% end %>
+          </a>
+        </div>
+  
+        <div class="media-body">
+          <input type="file" name="menu[image]" class="file-styled">
+          <span class="help-block">Accepted formats: gif, png, jpg.</span>
+        </div>
+      </div>
+    </div>
     
     <div class="form-group">
         <label class="col-md-2 control-label" ><%= t(:name) %> <span class='text-danger'>*</span></label>
