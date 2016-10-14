@@ -1,0 +1,36 @@
+<div class="row addable-row" data-index="<%= index %>">
+  <div class="col-sm-3 col-md-3">
+    <div class="form-group">
+      <div class="">
+        <%= text_field_tag "options[menus][thumbnails]["+index.to_s+"][code]", size["code"], class: "form-control" %>
+      </div>
+    </div>          
+  </div>
+  <div class="col-sm-2 col-md-2">
+    <div class="form-group">
+      <div class="">
+        <%= text_field_tag "options[menus][thumbnails]["+index.to_s+"][width]", size["width"], class: "form-control number_input" %>
+      </div>
+    </div>          
+  </div>
+  <div class="col-sm-2 col-md-2">
+    <div class="form-group">
+      <div class="">
+        <%= text_field_tag "options[menus][thumbnails]["+index.to_s+"][height]", size["height"], class: "form-control number_input" %>
+      </div>
+    </div>          
+  </div>
+  <div class="col-sm-3 col-md-3">
+    <div class="form-group">
+      <select class="select2" name="options[menus][thumbnails][<%= index.to_s %>][scale]">
+        <option <%= "selected" if size["scale"] == "fill" %> value="fill"><%= t(:fill) %></option>
+        <option <%= "selected" if size["scale"] == "fit" %> value="fit"><%= t(:fit) %></option>
+      </select>
+    </div>
+  </div>
+  <div class="col-sm-2 col-md-2">
+    <div class="form-group">
+      <a href="#add" class="btn btn-danger addable-remove">Remove</a>
+    </div>
+  </div>
+</div>
