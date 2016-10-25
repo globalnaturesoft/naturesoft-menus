@@ -1,6 +1,7 @@
 module Naturesoft::Menus
   class Menu < ApplicationRecord
     validates :name, presence: true
+    validates :custom_url, uniqueness: {allow_blank: true, allow_nil: true}
     include Naturesoft::CustomOrder
     mount_uploader :image, Naturesoft::Menus::MenuUploader
 		
@@ -211,6 +212,7 @@ module Naturesoft::Menus
     # get route name
     def url
 			return nil if name.nil?
+			return "/"+custom_url if custom_url.present?
 			
 			names = [Naturesoft::ApplicationController.helpers.url_friendly(self.name)]
 			p = self.parent

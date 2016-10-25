@@ -101,7 +101,7 @@ module Naturesoft
     
           # Only allow a trusted parameter "white list" through.
           def menu_params
-            params.fetch(:menu, {}).permit(:name, :description, :status, :parent_id, :menu, :image)
+            params.fetch(:menu, {}).permit(:name, :description, :status, :parent_id, :menu, :image, :custom_url)
           end
       end
     end
