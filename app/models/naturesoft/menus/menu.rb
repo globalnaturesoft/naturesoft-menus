@@ -175,7 +175,7 @@ module Naturesoft::Menus
 			return nil if id.nil?
 			
 			# Alias menu
-			if self.menu == 'menus::alias_menu'
+			if self.menu == 'menus::alias_menu' && self.get_params.present?
 				menu = Menu.find(self.get_params["menu_id"])
 				return menu.route_params
 			end
@@ -215,7 +215,7 @@ module Naturesoft::Menus
 			return "" if route_params.nil?
 			
 			# Alias menu
-			if self.menu == 'menus::alias_menu'
+			if self.menu == 'menus::alias_menu' && self.get_params.present?
 				menu = Menu.find(self.get_params["menu_id"])
 				return menu.path
 			end
@@ -238,7 +238,7 @@ module Naturesoft::Menus
 			return "/"+custom_url if custom_url.present?
 			
 			# Alias menu
-			if self.menu == 'menus::alias_menu'
+			if self.menu == 'menus::alias_menu' && self.get_params.present?
 				menu = Menu.find(self.get_params["menu_id"])
 				return menu.url
 			end
