@@ -13,6 +13,17 @@ module Naturesoft::Menus
     after_save :update_cache_options
     after_save :reload_routes
     
+    @menus = {
+      "alias_menu" => {
+        "label" => "Alias Menu",
+        "controller" => "/naturesoft/menus/menus",
+        "action" => nil,
+        "params" => {
+          "menu_id" => nil
+        }
+      }
+    }
+    
     def reload_routes
 			# reload routes
       Rails.application.reload_routes!  

@@ -1,0 +1,14 @@
+<% menu = Naturesoft::Menus::Menu.where(id: params["menu_id"]).first %>
+<div class="form-group">
+    <label class="col-md-2 control-label" ><%= t(:menu_id) %> <span class='text-danger'>*</span></label>
+    <div class="col-md-10">
+        <% selected = options_for_select([[menu.name,menu.id]],menu.id) if !menu.nil? %>
+        <%= select_tag("params[menu_id]",
+          selected,
+          {
+            class: "select2-ajax",
+            "data-url": naturesoft_menus.select2_admin_menus_path(parent_id: "all"),
+          }
+        ) %>
+    </div>
+</div>
