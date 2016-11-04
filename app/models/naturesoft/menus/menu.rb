@@ -174,6 +174,12 @@ module Naturesoft::Menus
     def route_params
 			return nil if id.nil?
 			
+			# Alias menu
+			if self.menu == 'menus::alias_menu'
+				menu = Menu.find(self.get_params["menu_id"])
+				return menu.route_params
+			end
+			
 			result = {controller: get_cache_options["controller"], action: get_cache_options["action"], :only_path => true}
 			if !get_params.nil?
 				get_params.each do |row|
@@ -208,6 +214,12 @@ module Naturesoft::Menus
     def path
 			return "" if route_params.nil?
 			
+			# Alias menu
+			if self.menu == 'menus::alias_menu'
+				menu = Menu.find(self.get_params["menu_id"])
+				return menu.path
+			end
+			
 			begin
 				return eval("Naturesoft::#{engine_name.split('_').map(&:capitalize).join('')}::Engine").routes.url_for(route_params)
 			rescue => ex
@@ -224,6 +236,12 @@ module Naturesoft::Menus
     def url
 			return nil if name.nil?
 			return "/"+custom_url if custom_url.present?
+			
+			# Alias menu
+			if self.menu == 'menus::alias_menu'
+				menu = Menu.find(self.get_params["menu_id"])
+				return menu.url
+			end
 			
 			names = [Naturesoft::ApplicationController.helpers.url_friendly(self.name)]
 			p = self.parent
