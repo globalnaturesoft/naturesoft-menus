@@ -1,6 +1,6 @@
 <div class="panel panel-flat">
   <div class="panel-body">
-    <%= form_for([naturesoft, :admin, Naturesoft::Option.new], html: {}) do |f| %>
+    <%= form_for([naturesoft, :backend, Naturesoft::Option.new], html: {}) do |f| %>
       <div class="row">
         <div class="col-md-3"><h4 class="text-semibold">Thumbnail <span class="text-muted small">Code</span></div>
         <div class="col-md-2"><br>Width</div>
@@ -12,7 +12,7 @@
       <div class="addable-form" data-sample="thumbnail-size-form">
         <div class="addable-container">
           <% @options["menus"]["thumbnails"].each_with_index do |size, index| %>
-            <%= render 'naturesoft/menus/admin/options/thumbnail_size', size: size[1], index: index %>
+            <%= render 'naturesoft/menus/backend/options/thumbnail_size', size: size[1], index: index %>
           <% end %>
         </div>
         <a href="#add" class="btn btn-info addable-add">Add new size</a>
@@ -33,7 +33,7 @@
     
       <div class="text-right">
         <%= button_tag "#{t(:save)}<i class=\"icon-check position-right\"></i>".html_safe, class: "btn btn-primary"%>
-        <%= link_to "#{t(:cancel)}<i class=\"icon-cross3 position-right\"></i>".html_safe, naturesoft_menus.admin_menus_path, class: "btn btn-danger"%>
+        <%= link_to "#{t(:cancel)}<i class=\"icon-cross3 position-right\"></i>".html_safe, naturesoft_menus.backend_menus_path, class: "btn btn-danger"%>
       </div>
         
     <% end %>
@@ -42,6 +42,6 @@
   
 <!-- thumbnail size sample form -->
 <div class="thumbnail-size-form hide">
-  <%= render 'naturesoft/menus/admin/options/thumbnail_size', size: {}, index: "<<index>>" %>
+  <%= render 'naturesoft/menus/backend/options/thumbnail_size', size: {}, index: "<<index>>" %>
 </div>
 <!--/thumbnail size sample form -->

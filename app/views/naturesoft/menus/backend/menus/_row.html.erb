@@ -10,7 +10,7 @@
         />
     </td>
     <td width="40%" class="kq_search" style="padding-left: <%= (item.level-1)*20 + 20 %>px">
-        <%= link_to item.name, naturesoft_menus.edit_admin_menu_path(item), class: "text-semibold" %>
+        <%= link_to item.name, naturesoft_menus.edit_backend_menu_path(item), class: "text-semibold" %>
         <div class="text-muted">
             <% if item.url.nil? %>
                 ...not generated
@@ -30,21 +30,21 @@
     <td class="text-right">
         <div class="btn-group">
             <ul class="icons-list">
-                <%= link_to '<i class="icon-pencil"></i>'.html_safe, naturesoft_menus.edit_admin_menu_path(item), class: "btn bg-teal btn-icon btn-xs", title: item.name %>
+                <%= link_to '<i class="icon-pencil"></i>'.html_safe, naturesoft_menus.edit_backend_menu_path(item), class: "btn bg-teal btn-icon btn-xs", title: item.name %>
                 <button type="button" class="btn bg-teal dropdown-toggle btn-xs" data-toggle="dropdown"><span class="caret"></span></button>
                 <ul class="dropdown-menu dropdown-menu-right">
                     <% if item.status == "active" %>
                     <li>
-                        <%= link_to '<i class="icon-lock4"></i> '.html_safe + t(:inactive), naturesoft_menus.disable_admin_menus_path(id: item.id), method: :put %>
+                        <%= link_to '<i class="icon-lock4"></i> '.html_safe + t(:inactive), naturesoft_menus.disable_backend_menus_path(id: item.id), method: :put %>
                     </li>
                     <% end %>
                     <% if item.status == "inactive" %>
                     <li>
-                        <%= link_to '<i class="icon-unlocked"></i> '.html_safe + t(:active), naturesoft_menus.enable_admin_menus_path(id: item.id), method: :put %>
+                        <%= link_to '<i class="icon-unlocked"></i> '.html_safe + t(:active), naturesoft_menus.enable_backend_menus_path(id: item.id), method: :put %>
                     </li>
                     <% end %>
                     <li>
-                        <%= link_to '<i class="icon-cross2"></i> '.html_safe + t(:delete), naturesoft_menus.admin_menu_path(item), method: :delete, data: {confirm: 'Are you sure?'} %>
+                        <%= link_to '<i class="icon-cross2"></i> '.html_safe + t(:delete), naturesoft_menus.backend_menu_path(item), method: :delete, data: {confirm: 'Are you sure?'} %>
                     </li>
                 </ul>
             </ul>

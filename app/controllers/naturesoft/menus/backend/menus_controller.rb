@@ -1,14 +1,14 @@
 module Naturesoft
   module Menus
-    module Admin
-      class MenusController < Naturesoft::Admin::AdminController
+    module Backend
+      class MenusController < Naturesoft::Backend::BackendController
         before_action :set_menu, only: [:show, :edit, :update, :enable, :disable, :destroy]
         before_action :default_breadcrumb
         
         # add top breadcrumb
         def default_breadcrumb
-          add_breadcrumb "Menu", naturesoft_menus.admin_menus_path
-          add_breadcrumb "Menus", naturesoft_menus.admin_menus_path
+          add_breadcrumb "Menu", naturesoft_menus.backend_menus_path
+          add_breadcrumb "Menus", naturesoft_menus.backend_menus_path
         end
     
         # GET /menus
@@ -39,7 +39,7 @@ module Naturesoft
           @menu.user = current_user
           
           if @menu.save
-            redirect_to naturesoft_menus.edit_admin_menu_path(@menu.id), notice: 'Menu was successfully created.'
+            redirect_to naturesoft_menus.edit_backend_menu_path(@menu.id), notice: 'Menu was successfully created.'
           else
             render :new
           end
@@ -49,7 +49,7 @@ module Naturesoft
         def update
           @menu.params = params[:params].to_json
           if @menu.update(menu_params)
-            redirect_to naturesoft_menus.edit_admin_menu_path(@menu.id), notice: 'Menu was successfully updated.'
+            redirect_to naturesoft_menus.edit_backend_menu_path(@menu.id), notice: 'Menu was successfully updated.'
           else
             render :edit
           end

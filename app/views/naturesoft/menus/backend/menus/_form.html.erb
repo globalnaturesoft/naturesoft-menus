@@ -13,7 +13,7 @@
   </div>
 <% end %>
 
-<%= form_for([naturesoft_menus, :admin, menu], html: {class: "form-horizontal validate", multipart: true}) do |f| %>
+<%= form_for([naturesoft_menus, :backend, menu], html: {class: "form-horizontal validate", multipart: true}) do |f| %>
     
     <div class="form-group">
       <label class="col-md-2 control-label" ><%= t(:image) %> </label>
@@ -65,7 +65,7 @@
               {
                 class: "select2-ajax",
                 include_blank: "none",
-                "data-url": select2_admin_menus_path(parent_id: 'all'),
+                "data-url": select2_backend_menus_path(parent_id: 'all'),
                 "data-excluded": menu.id,
               }
             ) %>            
@@ -75,7 +75,7 @@
     <div class="form-group">
       <label class="col-md-2 control-label" ><%= t(:menu_type) %></label>
         <div class="col-md-10">
-            <%= f.select :menu, grouped_options_for_select(Naturesoft::Menus::Menu.menusSelectOptions, menu.menu), {include_blank: "Choose..."}, {class: "select2 menu-type-select required", "data-url": naturesoft_menus.params_form_admin_menus_path(id: menu.id)} %>    
+            <%= f.select :menu, grouped_options_for_select(Naturesoft::Menus::Menu.menusSelectOptions, menu.menu), {include_blank: "Choose..."}, {class: "select2 menu-type-select required", "data-url": naturesoft_menus.params_form_backend_menus_path(id: menu.id)} %>    
         </div>
     </div>
         

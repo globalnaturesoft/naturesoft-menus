@@ -1,8 +1,0 @@
-<li>
-    <a href="#"><i class="icon-menu2"></i> <span><%= t(:menu) %></span></a>
-    <ul>
-        <li<% if["naturesoft/menus/admin/menus"].include?(params[:controller]) %>class="active"<% end %>>
-            <%= link_to t(:menus), naturesoft_menus.admin_menus_path %>
-        </li>
-    </ul>
-</li>

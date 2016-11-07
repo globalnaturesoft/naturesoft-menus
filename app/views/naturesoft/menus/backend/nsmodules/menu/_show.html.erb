@@ -4,7 +4,7 @@
   menus = parent_menu.nil? ? Naturesoft::Menus::Menu.where(level: 1).where(status: "active").order("custom_order, created_at") : parent_menu.children.where(status: "active").order("custom_order, created_at")
 %>
 
-<%= render "naturesoft/"+nsmodule.engine_name+"/admin/nsmodules/"+nsmodule.module_name+"/templates/"+options["style"],
+<%= render "naturesoft/"+nsmodule.engine_name+"/backend/nsmodules/"+nsmodule.module_name+"/templates/"+options["style"],
   parent_menu: parent_menu,
   options: options,
   menus: menus,

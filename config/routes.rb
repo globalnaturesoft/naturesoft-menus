@@ -1,5 +1,5 @@
 Naturesoft::Menus::Engine.routes.draw do
-  namespace :admin, module: "admin", path: "admin/menus" do
+  namespace :backend, module: "backend", path: "backend/menus" do
     resources :menus do
       collection do
         put "enable"

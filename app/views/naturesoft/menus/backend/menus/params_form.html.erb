@@ -13,4 +13,4 @@
 </div>
 
 <% engine_path = @menu.engine_name == "core" ? "" : "/"+@menu.engine_name %>
-<%= render "naturesoft"+engine_path+"/admin/menus/"+@menu.module_name+"/form", menu: @menu, params: @params %>
+<%= render "naturesoft"+engine_path+"/backend/menus/"+@menu.module_name+"/form", menu: @menu, params: @params %>

@@ -1,12 +1,12 @@
 <% title t(:menus) %>
 
 <div class="page_actions">
-    <%= link_to "#{t(:new_menu)} <i class=\"icon-plus22 position-right\"></i>".html_safe, naturesoft_menus.new_admin_menu_path, class: 'btn btn-primary' %>
+    <%= link_to "#{t(:new_menu)} <i class=\"icon-plus22 position-right\"></i>".html_safe, naturesoft_menus.new_backend_menu_path, class: 'btn btn-primary' %>
 </div>
 <br />
 
 <form class="listing-form sortable"
-    sort-url="<%= naturesoft.admin_custom_sort_path(class: "Naturesoft::Menus::Menu") %>"
+    sort-url="<%= naturesoft.backend_custom_sort_path(class: "Naturesoft::Menus::Menu") %>"
 >
     
     <div class="panel panel-flat border-top-primary">
@@ -18,7 +18,7 @@
                         <%= select_tag(:parent_id,
                             [],
                             class: "select2-ajax",
-                            "data-url": select2_admin_menus_path(parent_id: 'all')
+                            "data-url": select2_backend_menus_path(parent_id: 'all')
                         ) %>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
         </button>
         <ul class="dropdown-menu">											
             <li>
-                <a href="" data-href="<%= naturesoft_menus.delete_admin_menus_path %>" data-confirm="Are you sure!" data-method="DELETE">
+                <a href="" data-href="<%= naturesoft_menus.delete_backend_menus_path %>" data-confirm="Are you sure!" data-method="DELETE">
                     <i class="icon-enter"></i> Delete
                 </a>
             </li>            
@@ -86,7 +86,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <%= recursive_rows(@menus, params[:deep].to_i, "naturesoft/menus/admin/menus/row", true) %>                    
+                    <%= recursive_rows(@menus, params[:deep].to_i, "naturesoft/menus/backend/menus/row", true) %>                    
                 </tbody>
             </table>
             <div class="dataTables_wrapper no-footer">
