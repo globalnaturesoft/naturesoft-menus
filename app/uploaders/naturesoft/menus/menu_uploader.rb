@@ -54,18 +54,18 @@ module Naturesoft
         process :resize_to_fill => [70, 70]
       end
       
-      ## Thumbnails sizes
-      #Naturesoft::Option.get("menus", "thumbnails").each do |row|
-      #  if row[1]["width"].present? and row[1]["width"].present?
-      #    version :"#{row[1]["code"]}" do					
-      #      if row[1]["scale"] == "fill"
-      #        process :resize_to_fill => [row[1]["width"].to_i, row[1]["height"].to_i]
-      #      else
-      #        process :resize_to_fit => [row[1]["width"].to_i, row[1]["height"].to_i]
-      #      end
-      #    end
-      #  end
-      #end
+      # Thumbnails sizes
+      Naturesoft::Option.get("menus", "thumbnails").each do |row|
+        if row[1]["width"].present? and row[1]["width"].present?
+          version :"#{row[1]["code"]}" do					
+            if row[1]["scale"] == "fill"
+              process :resize_to_fill => [row[1]["width"].to_i, row[1]["height"].to_i]
+            else
+              process :resize_to_fit => [row[1]["width"].to_i, row[1]["height"].to_i]
+            end
+          end
+        end
+      end
     end
   end
 end
