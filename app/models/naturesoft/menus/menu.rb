@@ -252,5 +252,10 @@ module Naturesoft::Menus
 			
 			"/"+names.reverse.join("/")+".html"
 		end
+    
+    # Get menu by type
+    def self.get_by_type(types)
+			self.where(menu: types)
+		end
   end
 end
