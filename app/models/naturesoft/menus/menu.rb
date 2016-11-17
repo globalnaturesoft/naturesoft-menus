@@ -171,7 +171,7 @@ module Naturesoft::Menus
     end
     
     # def gnerate route
-    def route_params
+    def route_params(more_params={})
 			return nil if id.nil?
 			
 			# Alias menu
@@ -187,6 +187,10 @@ module Naturesoft::Menus
 				end
 			end
 			result[:menu_id] = self.id
+			
+			# more params
+			result = result.merge(more_params)
+			
 			return result
 		end
     
@@ -232,15 +236,15 @@ module Naturesoft::Menus
 			self.all
 		end
     
-    # get route name
-    def url
+    # get route raw name
+    def route_path
 			return nil if name.nil?
 			return "/"+custom_url if custom_url.present?
 			
 			# Alias menu
 			if self.menu == 'menus::alias_menu' && self.get_params.present?
 				menu = Menu.find(self.get_params["menu_id"])
-				return menu.url
+				return menu.route_path
 			end
 			
 			names = [Naturesoft::ApplicationController.helpers.url_friendly(self.name)]
@@ -256,6 +260,16 @@ module Naturesoft::Menus
     # Get menu by type
     def self.get_by_type(types)
 			self.where(menu: types)
+		end
+    
+    # Get path string
+    def path_string
+			"menu_#{self.id}"
+		end
+    
+    # Get route url
+    def url(params={})
+			Naturesoft::Menus::Engine.routes.url_helpers.send("#{path_string}_path", params)
 		end
   end
 end

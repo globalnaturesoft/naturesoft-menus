@@ -11,11 +11,11 @@ Naturesoft::Menus::Engine.routes.draw do
     end
   end
   
-  begin
+  #begin
     # route for menus
     Naturesoft::Menus::Menu.get_all.each do |m|
-      get m.url, m.route_params
+      get m.route_path, m.route_params.merge({as: m.path_string})
     end
-  rescue
-  end
+  #rescue
+  #end
 end
